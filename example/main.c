@@ -21,7 +21,7 @@ static float outputBuffer[FT_SAMPLES];
 static float resultBuffer[FT_SAMPLES];
 static sem_t sampleBufferMutex;
 
-// Callback to pull samples from miniaudio on the fly
+// Callback to pull samples from miniaudio capture device
 void StreamProcessor(void* data, unsigned int frameCount) {
 	sem_wait(&sampleBufferMutex);
 	float* sample = (float*) data;
@@ -55,7 +55,7 @@ int main(int argc, char** argv) {
 	memset(outputBuffer, 0, sizeof(float) * FT_SAMPLES);
 	memset(resultBuffer, 0, sizeof(float) * FT_SAMPLES);
 
-	// Load music file and setup stream processor
+	// Setup capture device and stream processor
 	sem_init(&sampleBufferMutex, 0, 1);
 	InitAudioCaptureDevice();
 	AttachAudioCaptureProcessor(StreamProcessor);
