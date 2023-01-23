@@ -1,5 +1,5 @@
 // 
-// Music visualizer using CUDA Discrete Fourier Transform
+// FFT spectrum analyzer
 //
 // 2023, Jonathan Tainer
 //
