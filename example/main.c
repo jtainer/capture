@@ -4,8 +4,6 @@
 // 2023, Jonathan Tainer
 //
 
-#include <stdio.h>
-#include <stdlib.h>
 #include <semaphore.h>
 #include <math.h>
 #include <string.h>
