@@ -7,7 +7,7 @@
 #include "capture.h"
 
 #define MINIAUDIO_IMPLEMENTATION
-#include "external/miniaudio.h"
+#include "miniaudio/miniaudio.h"
 
 #include <stdio.h>
 #include <stdlib.h>

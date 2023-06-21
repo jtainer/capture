@@ -1,0 +1,6 @@
+[submodule "miniaudio"]
+	path = miniaudio
+	url = git@github.com:mackron/miniaudio.git
+[submodule "example/fft"]
+	path = example/fft
+	url = git@github.com:jtainer/fft.git

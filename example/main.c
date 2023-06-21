@@ -10,14 +10,14 @@
 #include <raylib.h>
 
 #include "../capture.h"
-#include "external/fft.h"
+#include "fft/fft.h"
 
 #define FT_SAMPLES 1024
 
 #define SMOOTHING_CONST 0.95f	// 0.f == no smoothing, 1.f = max smoothing (no movement)
 
 static float sampleBuffer[FT_SAMPLES];
-static float outputBuffer[FT_SAMPLES];
+static complex float outputBuffer[FT_SAMPLES];
 static float resultBuffer[FT_SAMPLES];
 static sem_t sampleBufferMutex;
 
@@ -67,13 +67,13 @@ int main(int argc, char** argv) {
 
 		// Process most recent samples
 		sem_wait(&sampleBufferMutex);
-		fft_mag(sampleBuffer, outputBuffer, FT_SAMPLES);
+		fft(sampleBuffer, outputBuffer, FT_SAMPLES);
 		sem_post(&sampleBufferMutex);
 
 		BeginDrawing();
 		ClearBackground(bgColor);
 		for (int i = 0; i < FT_SAMPLES; i++) {
-			resultBuffer[i] = (SMOOTHING_CONST * resultBuffer[i]) + ((1.f - SMOOTHING_CONST) * outputBuffer[i]);
+			resultBuffer[i] = (SMOOTHING_CONST * resultBuffer[i]) + ((1.f - SMOOTHING_CONST) * cabsf(outputBuffer[i]));
 			Vector2 size = { (float) screenWidth / FT_SAMPLES, sigmoid(resultBuffer[i]) * screenHeight };
 			Vector2 pos = { i * size.x, screenHeight - size.y };
 			DrawRectangleV(pos, size, barColor);
